@@ -25,14 +25,9 @@ public class MainActivity extends AppCompatActivity {
        load.setVisibility(View.GONE);
 
         //
-        //  create an arra of intends objects
+        //  create an array of intends objects
         //
         final Intent[] intent = new Intent[2];
-
-
-
-
-
 
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
