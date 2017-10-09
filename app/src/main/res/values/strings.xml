@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SmartGroceries</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="imageDescription">Logo</string>
+    <string name="btn_login">Login</string>
+    <string name="newAccountText">New Here?</string>
+    <string name="newAccountLink">Create An Account</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="profile_photo">Settings</string>
+    <!--this gonna be a the username of the user logged in -->
+    <string name="logged_in_username">Joao Romao</string>
+
+    <!--activity_main2_drawer.xtl-->
+    <string name="scan_product">Scan Product</string>
+
+    <!--content main2.xml-->
+    <string name="scan_product_btn">Scan Product</string>
+    <string name="upc_code">UPC code</string>
+
+
+</resources>
