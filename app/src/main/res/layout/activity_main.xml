@@ -42,7 +42,7 @@
         tools:layout_constraintTop_creator="1">
 
         <EditText
-            android:id="@+id/tex_username"
+            android:id="@+id/txt_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_username"/>

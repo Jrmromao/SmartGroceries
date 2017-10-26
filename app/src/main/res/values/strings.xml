@@ -23,5 +23,20 @@
     <string name="scan_product_btn">Scan Product</string>
     <string name="upc_code">UPC code</string>
 
+    <!--Register Activity-->
+    <string name="reg_createAccount_txt">Create an account</string>
+
+    <string name="reg_name">Enter Your Name</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_password">Password</string>
+    <string name="reg_signIn">Sign In</string>
+    <string name="reg_haveAccount">Have an Account?</string>
+    <string name="reg_createAccount_btn">Create Account</string>
+
+
+
+
+
+
 
 </resources>
