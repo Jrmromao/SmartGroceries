@@ -49,9 +49,7 @@ public class Register_Activity extends AppCompatActivity {
         password = eText_password.getText().toString();
         email = eText_email.getText().toString();
 
-        String method = "register";
-        BackgroudTask backgroudTask = new BackgroudTask(this);
-        backgroudTask.execute(method, name, password, email);
+
 
         finish();
 
