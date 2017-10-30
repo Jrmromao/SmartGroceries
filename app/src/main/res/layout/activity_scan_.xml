@@ -7,11 +7,4 @@
     android:layout_height="match_parent"
     tools:context="co.devhut.smartgroceries.Scan_Activity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="64dp"/>
 </android.support.constraint.ConstraintLayout>

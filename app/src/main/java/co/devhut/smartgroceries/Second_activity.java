@@ -26,13 +26,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+public class Second_activity extends AppCompatActivity {
 
 
-
-public class MainActivity extends AppCompatActivity {
-
-
-    public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = Second_activity.class.getSimpleName();
     final int REQUEST_CODE = 123;
     final String REQUESTAG = "Cancel All";
     private RequestQueue mRequestQueue;
@@ -42,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
 
 
         TextView registerLink = (TextView) findViewById(R.id.newAccountLink);
@@ -137,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
                         finish();
-                        startActivity(new Intent(getApplicationContext(), Scan_Activity.class));
+                        startActivity(new Intent(getApplicationContext(), OptionsDrawer_Activity.class));
                         Log.i("SmartGroceries", "Success JSON Resold:" + response.toString());
                     } else {
                         Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();

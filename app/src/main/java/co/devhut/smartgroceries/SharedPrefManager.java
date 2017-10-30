@@ -55,7 +55,7 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        mCtx.startActivity(new Intent(mCtx, Main2Activity.class));
+        mCtx.startActivity(new Intent(mCtx, OptionsDrawer_Activity.class));
     }
 
 }

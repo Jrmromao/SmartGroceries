@@ -13,15 +13,19 @@
 
     <string name="action_settings">Settings</string>
     <string name="profile_photo">Settings</string>
+
     <!--this gonna be a the username of the user logged in -->
     <string name="logged_in_username">Joao Romao</string>
 
-    <!--activity_main2_drawer.xtl-->
+    <!--activity_optionsdrawer_drawer.xtl-->
     <string name="scan_product">Scan Product</string>
 
     <!--content main2.xml-->
     <string name="scan_product_btn">Scan Product</string>
     <string name="upc_code">UPC code</string>
+    <string name="nav_user_profile">Profile</string>
+    <string name="nav_start_shopping">Start Shopping</string>
+
 
     <!--Register Activity-->
     <string name="reg_createAccount_txt">Create an account</string>
@@ -33,10 +37,8 @@
     <string name="reg_haveAccount">Have an Account?</string>
     <string name="reg_createAccount_btn">Create Account</string>
 
-
-
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
