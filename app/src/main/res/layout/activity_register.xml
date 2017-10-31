@@ -84,7 +84,8 @@
             android:id="@+id/txtReg_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/reg_password" />
+            android:hint="@string/reg_password"
+            android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <Button

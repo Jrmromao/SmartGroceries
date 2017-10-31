@@ -1,5 +1,6 @@
 package co.devhut.smartgroceries;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import static co.devhut.smartgroceries.R.id.nav_view_header;
 
 /**
  * Created by jrmromao on 31/10/2017.
@@ -29,6 +33,7 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         setContentView(R.layout.activity_options_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +52,27 @@ public class OptionsDrawer_Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // my code
+
+//        @SuppressLint("WrongViewCast") NavigationView viewById = (NavigationView) findViewById(nav_view_header);
+//
+//        View hview = viewById.getHeaderView(0);
+//        TextView nav_user = (TextView) hview.findViewById(R.id.nav_view_header);
+//        nav_user.setText("manel");
+
+
+        //end my code
+
+
+        //if the user is already logged in we will directly start the profile activity
+        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, Second_activity.class));
+            return;
+        }
+
+
     }
 
     @Override
@@ -81,6 +107,7 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("ResourceType")
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -90,15 +117,17 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         if (id == R.id.nav_productDetails) {
 
             // to call a fragment
-            Products_Fragment prof_fragment = new Products_Fragment();
+            Products_Fragment products_fragment = new Products_Fragment();
             FragmentManager manager = getSupportFragmentManager();
 
 
-            manager.beginTransaction().replace(
-                    R.id.content_profile,
-                    prof_fragment,
-                    prof_fragment.getTag()
-            ).commit();
+            manager.beginTransaction()
+                    //.setCustomAnimations(R.animator.animation_fade_in, R.animator.animation_fade_out)
+                    .replace(
+                            R.id.content_profile,
+                            products_fragment,
+                            products_fragment.getTag()
+                    ).commit();
 
         } else if (id == R.id.nav_profile) {
 
@@ -125,5 +154,11 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

@@ -65,11 +65,14 @@ public class Register_Activity extends AppCompatActivity {
         createAccount_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegUser();
+
+                try {
+                    RegUser();
+                } catch (Exception e) {
+                    Log.e("SmartGroceries", "ERROR ON REGISTER NEW USER: " + e.toString());
+                }
             }
         });
-
-
     }
 
 
@@ -81,8 +84,7 @@ public class Register_Activity extends AppCompatActivity {
 
         JSONObject jsonBody = new JSONObject();
         final String requestBody = jsonBody.toString();
-        mRequestQueue = Volley.newRequestQueue(this); // here i had to create another instance of the request queue. I was
-        // getting the error because i was nor instantiating the new request queue
+
 
         //check if fields have values
         if (TextUtils.isEmpty(name)) {
@@ -100,7 +102,6 @@ public class Register_Activity extends AppCompatActivity {
             eText_email.requestFocus();
         }
 
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER, new Response.Listener<String>() {
 
             @Override
@@ -110,12 +111,12 @@ public class Register_Activity extends AppCompatActivity {
 
                     //if no error in response
                     if (!obj.getBoolean("error")) {
-                        // JSONObject userJson = obj.getJSONObject("user");
+                        JSONObject userJson = obj.getJSONObject("user");
 
-                        //  UserModel user = new UserModel(userJson.getInt("id"),
-                        //                               userJson.getString("name"),
-                        //                              userJson.getString("email"));
-                        //  SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                        UserModel user = new UserModel(userJson.getInt("id"),
+                                userJson.getString("name"),
+                                userJson.getString("email"));
+                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
                         finish();
                         startActivity(new Intent(getApplicationContext(), Second_activity.class));
@@ -147,90 +148,6 @@ public class Register_Activity extends AppCompatActivity {
                 return params;
             }
         };
-        mRequestQueue.add(stringRequest);
-
-
-
-
-    }
-
-
-    private void Login() {
-
-        TextView txt_username = (TextView) findViewById(R.id.txt_username);
-        TextView txt_password = (TextView) findViewById(R.id.txt_password);
-
-
-        JSONObject jsonBody = new JSONObject();
-        final String requestBody = jsonBody.toString();
-        mRequestQueue = Volley.newRequestQueue(this); // here i had to create another instance of the request queue. I was
-        // getting the error because i was nor instantiating the new request queue
-
-        final String username = txt_username.getText().toString();
-        final String password = txt_password.getText().toString();
-
-        //check if fields have values
-        if (TextUtils.isEmpty(username)) {
-            txt_username.setError("Please Enter Username");
-            txt_username.requestFocus();
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            txt_password.setError("Please Enter Password");
-            txt_password.requestFocus();
-            return;
-        }
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject obj = new JSONObject(response);//converting response to json object
-
-                    //if no error in response
-                    if (!obj.getBoolean("error")) {
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-                        JSONObject userJson = obj.getJSONObject("user");
-
-                        UserModel user = new UserModel(userJson.getInt("id"),
-                                userJson.getString("username"),
-                                userJson.getString("email"));
-
-                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), OptionsDrawer_Activity.class));
-                        Log.d("SmartGroceries", "Success JSON Resold:" + response.toString());
-
-                    } else {
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-
-                    Log.d("SmartGroceries", "Success JSON Resold:" + e.toString());
-
-                }
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.d("SmartGroceries", "onErrorResponse ERROR:" + error.toString());
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("name", username);           //
-                params.put("password", password);       //  values to be sent on the post request
-
-                return params;
-            }
-        };
-
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 

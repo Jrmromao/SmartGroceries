@@ -34,6 +34,8 @@ public class Products_Fragment extends Fragment {
 
     public Products_Fragment() {
         // Required empty public constructor
+
+
     }
 
     /**

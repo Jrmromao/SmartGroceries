@@ -124,7 +124,6 @@ public class Second_activity extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN, new Response.Listener<String>() {
 
-
             @Override
             public void onResponse(String response) {
                 try {
@@ -136,7 +135,9 @@ public class Second_activity extends AppCompatActivity {
 
                         JSONObject userJson = obj.getJSONObject("user");
 
-                        UserModel user = new UserModel(userJson.getInt("id"), userJson.getString("name"), userJson.getString("email"));
+                        UserModel user = new UserModel(userJson.getInt("id"),
+                                userJson.getString("name"),
+                                userJson.getString("email"));
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
                         finish();

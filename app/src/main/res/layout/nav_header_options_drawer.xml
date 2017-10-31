@@ -24,13 +24,13 @@
         app:srcCompat="@drawable/unnamed" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/nav_view_header"
         android:layout_width="match_parent"
         android:layout_height="47dp"
         android:fontFamily="sans-serif"
         android:text="@string/logged_in_username"
         android:textColor="#75d14d"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 </LinearLayout>

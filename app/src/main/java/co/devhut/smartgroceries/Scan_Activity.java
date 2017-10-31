@@ -29,8 +29,8 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class Scan_Activity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
-    private ZXingScannerView mScannerView;
     private static final int REQUESR_CAMERA = 1;
+    private ZXingScannerView mScannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,7 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
             }
         }
     }
-
     private void requestPermission() {
-
         ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUESR_CAMERA);
     }
 
@@ -126,6 +124,7 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
                 .show();
     }
 
+
     @Override
     public void handleResult(Result result) {
 
@@ -150,7 +149,9 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
 
         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+
         builder.setMessage(scanResult);
+
         AlertDialog alert = builder.create();
         alert.show();
     }
