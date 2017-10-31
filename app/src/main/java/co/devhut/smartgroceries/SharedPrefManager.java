@@ -20,6 +20,8 @@ public class SharedPrefManager {
     private static SharedPrefManager mInstance;
     private static Context mCtx;
 
+    public SharedPrefManager() {
+    }
 
     private SharedPrefManager(Context context) {
         mCtx = context;

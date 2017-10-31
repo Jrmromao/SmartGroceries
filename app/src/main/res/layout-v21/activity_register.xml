@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="34dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="32dp"
         android:background="@color/background"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/input_name"
@@ -45,7 +45,8 @@
             android:id="@+id/txtReg_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/reg_name" />
+            android:hint="@string/reg_name"
+            android:textSize="16sp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -66,7 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/reg_email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textSize="16sp" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -84,7 +86,8 @@
             android:id="@+id/txtReg_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/reg_password" />
+            android:hint="@string/reg_password"
+            android:textSize="16sp" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -95,21 +98,21 @@
         android:layout_marginTop="5dp"
         android:backgroundTint="@android:color/transparent"
         android:text="@string/reg_createAccount_btn"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/reg_signIn_txt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reg_signIn_txt"
-        app:layout_constraintTop_toBottomOf="@+id/input_password"
-        tools:targetApi="lollipop" />
+        app:layout_constraintTop_toBottomOf="@+id/input_password" />
 
     <TextView
         android:id="@+id/reg_haceAcc_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="11dp"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="5dp"
         android:text="@string/reg_haveAcc_txt"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/reg_signIn_txt"
         app:layout_constraintEnd_toStartOf="@+id/regSignIn_btn"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,9 +124,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="217dp"
         android:layout_marginEnd="101dp"
-        android:layout_marginStart="17dp"
+        android:layout_marginStart="18dp"
         android:text="@string/reg_signIn"
-        android:textSize="18sp"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/regSignIn_btn"

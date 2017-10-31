@@ -13,6 +13,9 @@ public class UserModel extends Application {
     private String mEmail;
     private int mUserID;
 
+    public UserModel() {
+    }
+
     public UserModel(int userID, String mUsername, String mEmail) {
         this.mUserID = userID;
         this.mUsername = mUsername;

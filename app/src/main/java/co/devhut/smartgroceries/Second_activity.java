@@ -34,7 +34,7 @@ public class Second_activity extends AppCompatActivity {
     final String REQUESTAG = "Cancel All";
     private RequestQueue mRequestQueue;
     private StringRequest StringRequest;
-
+    private ProgressBar load;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,15 @@ public class Second_activity extends AppCompatActivity {
         TextView registerLink = (TextView) findViewById(R.id.newAccountLink);
         Button login_btn = (Button) findViewById(R.id.btn_login);
         final ProgressBar load = (ProgressBar) findViewById(R.id.pb_loadProfile);
+
         load.setVisibility(View.GONE);
 
-        //  create an array of intends object
-        final Intent[] intent = new Intent[3];
-
+//if the user is already logged in we will directly start the profile activity
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, OptionsDrawer_Activity.class));
+            return;
+        }
 
         //
         //TODO: register button
@@ -58,11 +62,12 @@ public class Second_activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // register intent in the first position of the inten
-                intent[0] = new Intent(getApplicationContext(), Register_Activity.class);
-                startActivity(intent[0]);
+
+                startActivity(new Intent(getApplicationContext(), Register_Activity.class));
                 //Toast.makeText(getApplicationContext(), "Register Working", Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
         //
@@ -72,12 +77,11 @@ public class Second_activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                try {
+
                     Login();
-                } catch (Exception e) {
-                    Log.i("SmartGroceries", "LOGIN ERROR: " + e.toString());
+
                 }
-            }
+
 
 
         });
@@ -119,6 +123,8 @@ public class Second_activity extends AppCompatActivity {
         }
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN, new Response.Listener<String>() {
+
+
             @Override
             public void onResponse(String response) {
                 try {
@@ -130,15 +136,16 @@ public class Second_activity extends AppCompatActivity {
 
                         JSONObject userJson = obj.getJSONObject("user");
 
-                        UserModel user = new UserModel(userJson.getInt("id"), userJson.getString("username"), userJson.getString("email"));
+                        UserModel user = new UserModel(userJson.getInt("id"), userJson.getString("name"), userJson.getString("email"));
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
                         finish();
                         startActivity(new Intent(getApplicationContext(), OptionsDrawer_Activity.class));
-                        Log.i("SmartGroceries", "Success JSON Resold:" + response.toString());
+                        Log.e("SmartGroceries", "Success JSON Resold:" + response.toString());
                     } else {
                         Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -161,7 +168,7 @@ public class Second_activity extends AppCompatActivity {
             }
         };
 
-        mRequestQueue.add(stringRequest);
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
 

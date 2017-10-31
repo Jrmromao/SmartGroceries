@@ -1,5 +1,6 @@
 package co.devhut.smartgroceries;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -105,12 +106,20 @@ public class OptionsDrawer_Activity extends AppCompatActivity
             Profile_Fragment prof_fragment = new Profile_Fragment();
             FragmentManager manager = getSupportFragmentManager();
 
-
             manager.beginTransaction().replace(
                     R.id.content_profile,
                     prof_fragment,
                     prof_fragment.getTag()
             ).commit();
+
+
+        } else if (id == R.id.nav_signOut) {
+
+            //logout and redirect the user to the login activity
+            //
+            SharedPrefManager s = new SharedPrefManager();
+            s.logout();
+            startActivity(new Intent(getApplicationContext(), Second_activity.class));
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
