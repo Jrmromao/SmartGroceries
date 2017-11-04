@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,11 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import static co.devhut.smartgroceries.R.id.nav_view_header;
 
 /**
  * Created by jrmromao on 31/10/2017.
@@ -117,7 +112,8 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         if (id == R.id.nav_productDetails) {
 
             // to call a fragment
-            Products_Fragment products_fragment = new Products_Fragment();
+
+            Product_Fragment product_fragment = new Product_Fragment();
             FragmentManager manager = getSupportFragmentManager();
 
 
@@ -125,10 +121,12 @@ public class OptionsDrawer_Activity extends AppCompatActivity
                     //.setCustomAnimations(R.animator.animation_fade_in, R.animator.animation_fade_out)
                     .replace(
                             R.id.content_profile,
-                            products_fragment,
-                            products_fragment.getTag()
+                            product_fragment,
+                            product_fragment.getTag()
                     ).commit();
 
+
+            //  startActivity(new Intent(/*etActivity()*/getApplicationContext(), teste.class));
         } else if (id == R.id.nav_profile) {
 
             // to call a fragment

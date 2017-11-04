@@ -47,6 +47,14 @@
     <string name="prof_lastName">Last Name: </string>
     <string name="prof_email">Email: </string>
     <string name="prof_dateJoined">Date Joined: </string>
+    <string name="title_activity_teste">teste</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--result fragment -->
+    <string name="r_upcCode">UPC Code: </string>
 
 
 </resources>

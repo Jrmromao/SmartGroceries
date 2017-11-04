@@ -2,6 +2,7 @@ package co.devhut.smartgroceries;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,12 +29,10 @@ import java.util.Map;
 
 public class Second_activity extends AppCompatActivity {
 
-
     public static final String TAG = Second_activity.class.getSimpleName();
     final int REQUEST_CODE = 123;
     final String REQUESTAG = "Cancel All";
-    private RequestQueue mRequestQueue;
-    private StringRequest StringRequest;
+    //private StringRequest StringRequest;
     private ProgressBar load;
 
     @Override
@@ -41,70 +40,55 @@ public class Second_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-
         TextView registerLink = (TextView) findViewById(R.id.newAccountLink);
         Button login_btn = (Button) findViewById(R.id.btn_login);
-        final ProgressBar load = (ProgressBar) findViewById(R.id.pb_loadProfile);
 
+        load = (ProgressBar) findViewById(R.id.pb_loadProfile);
         load.setVisibility(View.GONE);
 
-//if the user is already logged in we will directly start the profile activity
+        //if the user is already logged in we will directly start the profile activity
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, OptionsDrawer_Activity.class));
             return;
         }
-
-        //
         //TODO: register button
-        //
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // register intent in the first position of the inten
+                // register intent in the first position of the intent
 
                 startActivity(new Intent(getApplicationContext(), Register_Activity.class));
                 //Toast.makeText(getApplicationContext(), "Register Working", Toast.LENGTH_SHORT).show();
             }
         });
 
-
-
-        //
         //TODO: login button
-        //
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                    Login();
-
-                }
-
-
-
+                Login();
+                //progress bar will load for 2 seconds
+                load.setVisibility(View.VISIBLE);
+            }
         });
-
     }
 
     //TODO: add onResume here
     @Override
     protected void onResume() {
         super.onResume();
-
-        Log.d("SmartGroceries", "onResume Method");
     }
 
-
+    // method to process the login
     private void Login() {
 
         TextView txt_username = (TextView) findViewById(R.id.txt_username);
         TextView txt_password = (TextView) findViewById(R.id.txt_password);
-
+        //load.setVisibility(View.VISIBLE);
         JSONObject jsonBody = new JSONObject();
         final String requestBody = jsonBody.toString();
-        mRequestQueue = Volley.newRequestQueue(this); // here i had to create another instance of the request queue. I was
+        //RequestQueue mRequestQueue = Volley.newRequestQueue(this);
         // getting the error because i was nor instantiating the new request queue
 
         final String username = txt_username.getText().toString();
@@ -127,7 +111,7 @@ public class Second_activity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject obj = new JSONObject(response);//converting response to json object
+                    JSONObject obj = new JSONObject(response); //converting response to json object
 
                     //if no error in response
                     if (!obj.getBoolean("error")) {
@@ -140,9 +124,16 @@ public class Second_activity extends AppCompatActivity {
                                 userJson.getString("email"));
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), OptionsDrawer_Activity.class));
-                        Log.e("SmartGroceries", "Success JSON Resold:" + response.toString());
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(getApplicationContext(), OptionsDrawer_Activity.class));
+                                finish();
+                            }
+                        }, 2000);
+
+
+                        Log.e("SmartGroceries", "Success JSON Resold:" + response);
                     } else {
                         Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                     }
@@ -162,8 +153,8 @@ public class Second_activity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", username);           //
-                params.put("password", password);       //  values to be sent on the post request
+                params.put("name", username); //
+                params.put("password", password); //  values to be sent on the post request
 
                 return params;
             }

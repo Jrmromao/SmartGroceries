@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_products"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/background"
+    tools:context="co.devhut.smartgroceries.Product_Fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/FP_scanBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="24dp"
+        android:background="@color/background"
+        android:elevation="1dp"
+        android:text="@string/scan_product"
+        tools:ignore="UnusedAttribute" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_marginLeft="40dp"-->
+    <!--android:layout_marginStart="40dp"-->
+    <!--android:layout_marginTop="128dp"-->
+    <!--android:text="product UPC:" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView4"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignTop="@+id/textView2"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginStart="10dp"-->
+    <!--android:layout_toEndOf="@+id/textView2"-->
+    <!--android:layout_toRightOf="@+id/textView2" />-->
+
+</RelativeLayout>

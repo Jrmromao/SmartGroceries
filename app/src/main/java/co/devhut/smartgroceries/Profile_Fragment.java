@@ -35,9 +35,7 @@ public class Profile_Fragment extends Fragment {
         name.setText(user.getUsername());
         surnameName.setText(user.getUsername());
         email.setText(user.getEmail());
-        dateJoined.setText("to be updated later");
-
-
+        dateJoined.setText(" to be update");
 
 
         // Inflate the layout for this fragment

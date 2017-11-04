@@ -1,6 +1,7 @@
 package co.devhut.smartgroceries;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,18 +23,15 @@ public class First_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
 
-        Button btn = (Button) findViewById(R.id.firstActivity_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+
+        //wait 3 seconds to load the second activity, login activity.
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-
+            public void run() {
                 startActivity(new Intent(getApplicationContext(), Second_activity.class));
-
+                finish();
             }
-        });
-
+        }, 3000);
 
     }
-
-
 }

@@ -10,6 +10,7 @@ import android.media.ToneGenerator;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
     private static final int REQUESR_CAMERA = 1;
     private ZXingScannerView mScannerView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +49,17 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
             }
         }
     }
+
+
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUESR_CAMERA);
+
     }
 
     private boolean checkPermission()    {
         return (ContextCompat.checkSelfPermission(Scan_Activity.this, Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED);
     }
+
 
     public void onRequestPermissionsResult(final int requestCode, String permission[], int grantResults[]){
 
@@ -91,7 +97,6 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
     @Override
     public void onResume(){
         super.onResume();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(checkPermission())
             {
@@ -101,12 +106,13 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
                 }
                 mScannerView.setResultHandler(this);
                 mScannerView.startCamera();
-
             }
             else{
                 requestPermission();
             }
         }
+
+
     }
 
     @Override
@@ -128,29 +134,33 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
     @Override
     public void handleResult(Result result) {
 
-        final String scanResult = result.getText();
+        BarCode.setBarcodeNum(result.getText());
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("scan result");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mScannerView.resumeCameraPreview(Scan_Activity.this);
+
+                finish();
+
             }
         });
 
-        builder.setNeutralButton("Visit", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Skip", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(scanResult));
-                startActivity(intent);
+                mScannerView.resumeCameraPreview(Scan_Activity.this);
+
+                finish();
             }
         });
 
         ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
 
-        builder.setMessage(scanResult);
+        builder.setMessage(BarCode.getBarcode());
 
         AlertDialog alert = builder.create();
         alert.show();
