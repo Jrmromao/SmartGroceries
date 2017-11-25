@@ -18,6 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--<activity android:name=".Second_activity"-->
+        <!--android:label="@string/app_name"-->
+        <!--android:screenOrientation="portrait" />-->
+
+
         <!-- the activity that will be called in first place -->
         <activity android:name=".First_Activity">
             <intent-filter>

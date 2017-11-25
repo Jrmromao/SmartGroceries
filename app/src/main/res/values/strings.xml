@@ -57,4 +57,7 @@
     <string name="r_upcCode">UPC Code: </string>
 
 
+    <!--listView product-->
+    <string name="pl_image_desc">product logo</string>
+
 </resources>

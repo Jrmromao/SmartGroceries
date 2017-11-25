@@ -31,7 +31,7 @@ public class First_Activity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Second_activity.class));
                 finish();
             }
-        }, 3000);
+        }, 1500);
 
     }
 }

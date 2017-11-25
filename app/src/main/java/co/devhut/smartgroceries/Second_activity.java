@@ -14,16 +14,16 @@ import android.widget.Toast;
 //volley api
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -34,6 +34,7 @@ public class Second_activity extends AppCompatActivity {
     final String REQUESTAG = "Cancel All";
     //private StringRequest StringRequest;
     private ProgressBar load;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class Second_activity extends AppCompatActivity {
             startActivity(new Intent(this, OptionsDrawer_Activity.class));
             return;
         }
+
+
         //TODO: register button
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,13 +66,14 @@ public class Second_activity extends AppCompatActivity {
             }
         });
 
+
         //TODO: login button
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Login();
-                //progress bar will load for 2 seconds
-                load.setVisibility(View.VISIBLE);
+                //load list with best products
+                loadProdList();
             }
         });
     }
@@ -78,7 +82,10 @@ public class Second_activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //progress bar will load for 2 seconds
+        load.setVisibility(View.VISIBLE);
     }
+
 
     // method to process the login
     private void Login() {
@@ -107,35 +114,36 @@ public class Second_activity extends AppCompatActivity {
         }
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN, new Response.Listener<String>() {
-
             @Override
             public void onResponse(String response) {
-                try {
-                    JSONObject obj = new JSONObject(response); //converting response to json object
 
+                try {
+                    JSONObject obj = new JSONObject(response);
                     //if no error in response
                     if (!obj.getBoolean("error")) {
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
                         JSONObject userJson = obj.getJSONObject("user");
-
+                        Toast.makeText(getApplicationContext(), userJson.toString(), Toast.LENGTH_SHORT).show();
                         UserModel user = new UserModel(userJson.getInt("id"),
                                 userJson.getString("name"),
                                 userJson.getString("email"));
+
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                progressBarLoad();
                                 startActivity(new Intent(getApplicationContext(), OptionsDrawer_Activity.class));
                                 finish();
                             }
-                        }, 2000);
-
+                        }, 1000);
 
                         Log.e("SmartGroceries", "Success JSON Resold:" + response);
-                    } else {
+
+                    } else /*if(obj.getBoolean("error"))*/ {
+                        load.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        Log.e("SmartGroceries", "ERROR JSON Resold:" + response);
                     }
 
                 } catch (JSONException e) {
@@ -153,8 +161,8 @@ public class Second_activity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", username); //
-                params.put("password", password); //  values to be sent on the post request
+                params.put("name", username);       //
+                params.put("password", password);   //  values to be sent on the post request
 
                 return params;
             }
@@ -162,6 +170,71 @@ public class Second_activity extends AppCompatActivity {
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
+
+    public void progressBarLoad() {
+        load.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                load.setVisibility(View.GONE);
+            }
+        }, 1000);
+    }
+
+
+    public void loadProdList() {
+        final ArrayList<ProductModel> bestProdList = new ArrayList<>();
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_BEST_PRODUCT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject obj = new JSONObject(response); //converting response to json object
+
+                            //if no error in response
+                            if (!obj.getBoolean("error")) {
+                                Log.e("SmartGroceries", "doInBackground catch: " + response);
+
+                                JSONObject prodJson = obj.getJSONObject("product");
+                                ProductModel bp = new ProductModel(prodJson.getInt("upc_num"),
+                                        prodJson.getString("name"),
+                                        prodJson.getString("brand"),
+                                        prodJson.getString("description"),
+                                        prodJson.getString("expiry_date"),
+                                        prodJson.getDouble("price"));
+
+                                bestProdList.add(bp);
+                                ProdLists.setBestProdList(bestProdList);
+
+
+                            }
+                        } catch (JSONException e) {
+                            Log.e("SmartGroceries", "doInBackground catch: " + e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("SmartGroceries", "onErrorResponse ERROR:" + error.toString());
+                    }
+                }) {
+
+
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+
+    }
+
+
+
+
+
+
 
 
 }

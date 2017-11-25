@@ -9,4 +9,11 @@
     tools:context="co.devhut.smartgroceries.OptionsDrawer_Activity"
     tools:showIn="@layout/app_bar_pptions_drawer">
 
+    <ListView
+        android:id="@+id/best_product"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="156dp" />
 </RelativeLayout>

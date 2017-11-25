@@ -7,6 +7,12 @@
     tools:context="co.devhut.smartgroceries.Product_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <ListView
+        android:id="@+id/product_List_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
     <Button
         android:id="@+id/FP_scanBtn"
         android:layout_width="match_parent"
@@ -19,6 +25,7 @@
         android:elevation="1dp"
         android:text="@string/scan_product"
         tools:ignore="UnusedAttribute" />
+
 
     <!--<TextView-->
     <!--android:id="@+id/textView2"-->

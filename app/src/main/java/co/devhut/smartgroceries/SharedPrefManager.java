@@ -1,14 +1,16 @@
 package co.devhut.smartgroceries;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
 /**
  * Created by jrmromao on 29/10/2017.
+ * class to hold the user that is currently logged in
  */
 
-public class SharedPrefManager {
+class SharedPrefManager {
 
 
     //the constants
@@ -17,17 +19,19 @@ public class SharedPrefManager {
     private static final String KEY_EMAIL = "keyemail";
     private static final String KEY_ID = "keyid";
 
+    @SuppressLint("StaticFieldLeak")
     private static SharedPrefManager mInstance;
+    @SuppressLint("StaticFieldLeak")
     private static Context mCtx;
 
-    public SharedPrefManager() {
+    SharedPrefManager() {
     }
 
     private SharedPrefManager(Context context) {
         mCtx = context;
     }
 
-    public static synchronized SharedPrefManager getInstance(Context context) {
+    static synchronized SharedPrefManager getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new SharedPrefManager(context);
         }
@@ -35,7 +39,7 @@ public class SharedPrefManager {
     }
 
 
-    public void userLogin(UserModel user) {
+    void userLogin(UserModel user) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_ID, user.getUserID());
@@ -45,14 +49,14 @@ public class SharedPrefManager {
     }
 
 
-    public boolean isLoggedIn() {
+    boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERNAME, null) != null;
     }
 
 
     //this method will give the logged in user
-    public UserModel getUser() {
+    UserModel getUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new UserModel(
                 sharedPreferences.getInt(KEY_ID, -1),
@@ -65,7 +69,7 @@ public class SharedPrefManager {
 
 
     //this method will logout the user
-    public void logout() {
+    void logout() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();

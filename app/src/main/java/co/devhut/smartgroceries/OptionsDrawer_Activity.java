@@ -14,6 +14,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * Created by jrmromao on 31/10/2017.
@@ -21,7 +25,7 @@ import android.view.MenuItem;
 
 public class OptionsDrawer_Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    ArrayList<String> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +72,18 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         }
 
 
+        ListView bestProd = (ListView) findViewById(R.id.best_product);
+
+
+        ProdListAdapter prodAdapter = new ProdListAdapter(this, R.layout.product_line, ProdLists.getBestProdList());
+
+        if (!ProdLists.getBestProdList().isEmpty()) {
+            bestProd.setAdapter(prodAdapter);
+
+        }
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -112,11 +127,8 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         if (id == R.id.nav_productDetails) {
 
             // to call a fragment
-
             Product_Fragment product_fragment = new Product_Fragment();
             FragmentManager manager = getSupportFragmentManager();
-
-
             manager.beginTransaction()
                     //.setCustomAnimations(R.animator.animation_fade_in, R.animator.animation_fade_out)
                     .replace(
@@ -124,7 +136,6 @@ public class OptionsDrawer_Activity extends AppCompatActivity
                             product_fragment,
                             product_fragment.getTag()
                     ).commit();
-
 
             //  startActivity(new Intent(/*etActivity()*/getApplicationContext(), teste.class));
         } else if (id == R.id.nav_profile) {
@@ -138,7 +149,6 @@ public class OptionsDrawer_Activity extends AppCompatActivity
                     prof_fragment,
                     prof_fragment.getTag()
             ).commit();
-
 
         } else if (id == R.id.nav_signOut) {
 

@@ -153,7 +153,7 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
             public void onClick(DialogInterface dialog, int which) {
                 mScannerView.resumeCameraPreview(Scan_Activity.this);
 
-                finish();
+                // finish();
             }
         });
 
