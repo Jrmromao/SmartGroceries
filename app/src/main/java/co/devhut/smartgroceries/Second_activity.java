@@ -83,7 +83,7 @@ public class Second_activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //progress bar will load for 2 seconds
-        load.setVisibility(View.VISIBLE);
+        load.setVisibility(View.GONE);
     }
 
 
@@ -138,11 +138,10 @@ public class Second_activity extends AppCompatActivity {
                             }
                         }, 1000);
 
-                        Log.e("SmartGroceries", "Success JSON Resold:" + response);
 
                     } else /*if(obj.getBoolean("error"))*/ {
                         load.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Login Fail", Toast.LENGTH_SHORT).show();
                         Log.e("SmartGroceries", "ERROR JSON Resold:" + response);
                     }
 
@@ -176,16 +175,15 @@ public class Second_activity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                load.setVisibility(View.GONE);
+
             }
         }, 1000);
+        load.setVisibility(View.GONE);
     }
 
 
     public void loadProdList() {
         final ArrayList<ProductModel> bestProdList = new ArrayList<>();
-
-
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_BEST_PRODUCT,
                 new Response.Listener<String>() {
                     @Override

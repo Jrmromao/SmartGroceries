@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +40,7 @@ public class Product_Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ArrayList<ProductModel> testList;
 
     public Product_Fragment() {
         // Required empty public constructor
@@ -82,6 +82,27 @@ public class Product_Fragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_product_, container, false);
         scanBtn = (Button) view.findViewById(R.id.FP_scanBtn);
+        ArrayList<ProductModel> testList = new ArrayList<>();
+
+//for (int i=0; i < 10; i++){
+//    ProductModel pm = new ProductModel();
+//    pm.setProdCount(2);
+//    pm.setmDescription("isto e so im test");
+//    pm.setmBrand("nestle");
+//    pm.setPrice(254.2+i);
+//    pm.setmName("test name");
+//    testList.add(pm);
+//}
+
+
+        ListView pList = (ListView) view.findViewById(R.id.product_List_view);
+        ProdLists.setScanProdList(testList);
+        ArrayList<ProductModel> list = (ArrayList<ProductModel>) ProdLists.getScanProdList();
+        ProdListAdapter adapter = new ProdListAdapter(getContext(), testList);
+
+        pList.setAdapter(adapter);
+
+
 
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +117,6 @@ public class Product_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //txt_barcode.setText(BarCode.getBarcode());
         new GetProductTask().execute();
 
     }
@@ -175,7 +195,7 @@ public class Product_Fragment extends Fragment {
                                 ProdLists.setScanProdList(prodList);
 
                             }
-                            Log.d("SmartGroceries", "Success JSON Resold:" + response);
+                            Log.d("Result", "Success JSON Resold:" + response);
                         }
 
                     } catch (JSONException e) {

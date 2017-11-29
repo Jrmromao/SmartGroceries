@@ -79,7 +79,7 @@ public class ListAdapter extends BaseAdapter {
         final ProductModel productModel = getItem(position);
         final ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        String pBrand = productModel.getmBrande();
+        String pBrand = productModel.getmBrand();
         holder.brand.setText(pBrand);
 
         String pName = productModel.getmName();

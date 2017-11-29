@@ -52,16 +52,6 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // my code
-
-//        @SuppressLint("WrongViewCast") NavigationView viewById = (NavigationView) findViewById(nav_view_header);
-//
-//        View hview = viewById.getHeaderView(0);
-//        TextView nav_user = (TextView) hview.findViewById(R.id.nav_view_header);
-//        nav_user.setText("manel");
-
-
-        //end my code
 
 
         //if the user is already logged in we will directly start the profile activity
@@ -72,16 +62,13 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         }
 
 
-        ListView bestProd = (ListView) findViewById(R.id.best_product);
-
-
-        ProdListAdapter prodAdapter = new ProdListAdapter(this, R.layout.product_line, ProdLists.getBestProdList());
-
-        if (!ProdLists.getBestProdList().isEmpty()) {
-            bestProd.setAdapter(prodAdapter);
-
-        }
-
+//        ListView bestProd = (ListView) findViewById(R.id.best_product);
+//      //  ProdListAdapter prodAdapter = new ProdListAdapter(this, R.layout.product_line, ProdLists.getBestProdList());
+//
+//        if (!ProdLists.getBestProdList().isEmpty()) {
+//           bestProd.setAdapter(prodAdapter);
+//
+//        }
     }
 
 
@@ -125,19 +112,19 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_productDetails) {
-
+//call product fragment
             // to call a fragment
             Product_Fragment product_fragment = new Product_Fragment();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction()
-                    //.setCustomAnimations(R.animator.animation_fade_in, R.animator.animation_fade_out)
+
                     .replace(
                             R.id.content_profile,
                             product_fragment,
                             product_fragment.getTag()
                     ).commit();
 
-            //  startActivity(new Intent(/*etActivity()*/getApplicationContext(), teste.class));
+            // startActivity(new Intent(getApplicationContext(), Scan_Activity.class));
         } else if (id == R.id.nav_profile) {
 
             // to call a fragment

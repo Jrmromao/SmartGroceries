@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -132,7 +133,7 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
 
 
     @Override
-    public void handleResult(Result result) {
+    public void handleResult(final Result result) {
 
         BarCode.setBarcodeNum(result.getText());
 
@@ -142,8 +143,11 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 finish();
+                Log.e("Result", "\t\t result: " + result);
+
+
+
 
             }
         });

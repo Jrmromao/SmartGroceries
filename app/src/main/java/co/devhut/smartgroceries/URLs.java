@@ -9,7 +9,7 @@ class URLs {
 
     //home
     //private static final String ROOT_URL = "http://192.168.0.3:8081/SmartGrocery/PHP/Api.php?apicall=";
-    private static final String ROOT_URL = "http://192.168.0.3:8082/WebService/webresources/api/";
+    private static final String ROOT_URL = "http://192.168.0.3:8085/WebService/webresources/api/";
 
     //login
     //college

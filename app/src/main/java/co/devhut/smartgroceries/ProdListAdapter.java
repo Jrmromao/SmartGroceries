@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,52 +21,35 @@ import java.util.List;
 public class ProdListAdapter extends ArrayAdapter<ProductModel> {
 
 
-    public ProdListAdapter(@NonNull Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
+    public ProdListAdapter(@NonNull Context context, ArrayList<ProductModel> pList) {
+        super(context, 0, pList);
     }
 
     public ProdListAdapter(Context context, int resource, List<ProductModel> products) {
         super(context, resource, products);
     }
 
-    @SuppressLint({"InflateParams", "Assert", "SetTextI18n"})
+
+    @SuppressLint("SetTextI18n")
     @NonNull
-    @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        ProductModel pm = getItem(position);
 
-        View v = convertView;
-
-        if (v != null) {
-            LayoutInflater vi;
-            vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.product_line, null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.product_line, parent, false);
         }
 
-        ProductModel p = getItem(position);
+        TextView prodBrand = (TextView) convertView.findViewById(R.id.pl_brand_txt);
+        TextView prodName = (TextView) convertView.findViewById(R.id.pl_name_txt);
+        TextView prodPrice = (TextView) convertView.findViewById(R.id.pl_price_txt);
 
-        if (p == null) {
-
-            assert v != null;
-            TextView tt1 = (TextView) v.findViewById(R.id.pl_brand_txt);
-            TextView tt2 = (TextView) v.findViewById(R.id.pl_name_txt);
-            TextView tt3 = (TextView) v.findViewById(R.id.pl_price_txt);
+        assert pm != null;
+        prodBrand.setText(pm.getmBrand());
+        prodName.setText(pm.getmName());
+        prodPrice.setText("" + pm.getmPrice());
 
 
-            if (tt1 != null) {
-                assert false;
-                tt1.setText(p.getmBrande());
-            }
-            if (tt2 != null) {
-                assert false;
-                tt2.setText(p.getmName());
-            }
-            if (tt3 != null) {
-                assert false;
-                tt3.setText(p.getmPrice() + "");
-            }
-
-        }
-        return v;
+        return convertView;
 
     }
 }

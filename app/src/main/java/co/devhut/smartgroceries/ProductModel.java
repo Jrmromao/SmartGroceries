@@ -1,9 +1,5 @@
 package co.devhut.smartgroceries;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 /**
  * Created by jrmromao on 04/11/2017.
  * class to hold the product details
@@ -13,7 +9,7 @@ public class ProductModel {
 
 
     private int mUPC_num;
-    private String mBrande;
+    private String mBrand;
     private String mName;
     private String mDescription;
     private String mExpiryDate;
@@ -29,20 +25,20 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(int mUPC_num, String mBrande, String mName, String mDescription, String mExpiryDate, double mPrice) {
+    public ProductModel(int mUPC_num, String mBrand, String mName, String mDescription, String mExpiryDate, double mPrice) {
         this.mUPC_num = mUPC_num;
         this.mName = mName;
-        this.mName = mBrande;
+        this.mName = mBrand;
         this.mDescription = mDescription;
         this.mExpiryDate = mExpiryDate;
         this.mPrice = mPrice;
     }
 
 
-    public ProductModel(int mUPC_num, String mBrande, String mName, String mDescription, String mExpiryDate, double mPrice, int prodCount) {
+    public ProductModel(int mUPC_num, String mBrand, String mName, String mDescription, String mExpiryDate, double mPrice, int prodCount) {
         this.mUPC_num = mUPC_num;
         this.mName = mName;
-        this.mName = mBrande;
+        this.mName = mBrand;
         this.mDescription = mDescription;
         this.mExpiryDate = mExpiryDate;
         this.mPrice = mPrice;
@@ -57,12 +53,12 @@ public class ProductModel {
         this.prodCount = prodCount;
     }
 
-    public String getmBrande() {
-        return mBrande;
+    public String getmBrand() {
+        return mBrand;
     }
 
-    public void setmBrande(String mBrande) {
-        this.mBrande = mBrande;
+    public void setmBrand(String mBrand) {
+        this.mBrand = mBrand;
     }
 
     public int getmUPC_num() {
