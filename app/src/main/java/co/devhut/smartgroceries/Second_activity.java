@@ -41,11 +41,13 @@ public class Second_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+
         TextView registerLink = (TextView) findViewById(R.id.newAccountLink);
         Button login_btn = (Button) findViewById(R.id.btn_login);
 
         load = (ProgressBar) findViewById(R.id.pb_loadProfile);
         load.setVisibility(View.GONE);
+        //load list with best products
 
         //if the user is already logged in we will directly start the profile activity
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -72,10 +74,11 @@ public class Second_activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Login();
-                //load list with best products
-                loadProdList();
+
             }
         });
+
+
     }
 
     //TODO: add onResume here
@@ -92,6 +95,8 @@ public class Second_activity extends AppCompatActivity {
 
         TextView txt_username = (TextView) findViewById(R.id.txt_username);
         TextView txt_password = (TextView) findViewById(R.id.txt_password);
+
+
         //load.setVisibility(View.VISIBLE);
         JSONObject jsonBody = new JSONObject();
         final String requestBody = jsonBody.toString();
@@ -113,7 +118,8 @@ public class Second_activity extends AppCompatActivity {
             return;
         }
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                URLs.URL_LOGIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -182,51 +188,7 @@ public class Second_activity extends AppCompatActivity {
     }
 
 
-    public void loadProdList() {
-        final ArrayList<ProductModel> bestProdList = new ArrayList<>();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_BEST_PRODUCT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject obj = new JSONObject(response); //converting response to json object
 
-                            //if no error in response
-                            if (!obj.getBoolean("error")) {
-                                Log.e("SmartGroceries", "doInBackground catch: " + response);
-
-                                JSONObject prodJson = obj.getJSONObject("product");
-                                ProductModel bp = new ProductModel(prodJson.getInt("upc_num"),
-                                        prodJson.getString("name"),
-                                        prodJson.getString("brand"),
-                                        prodJson.getString("description"),
-                                        prodJson.getString("expiry_date"),
-                                        prodJson.getDouble("price"));
-
-                                bestProdList.add(bp);
-                                ProdLists.setBestProdList(bestProdList);
-
-
-                            }
-                        } catch (JSONException e) {
-                            Log.e("SmartGroceries", "doInBackground catch: " + e.toString());
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("SmartGroceries", "onErrorResponse ERROR:" + error.toString());
-                    }
-                }) {
-
-
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-
-    }
 
 
 

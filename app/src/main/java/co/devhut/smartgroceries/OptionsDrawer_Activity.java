@@ -16,11 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 /**
  * Created by jrmromao on 31/10/2017.
+ * class for the menu option drawer
  */
 
 public class OptionsDrawer_Activity extends AppCompatActivity
@@ -52,6 +54,39 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        ProductModel pm = new ProductModel();
+        ArrayList<ProductModel> list = new ArrayList<>();
+
+
+//        //test items in the list
+//        pm.setmName("batatas");
+//        pm.setPrice(4.25);
+//        pm.setmBrand("Matutano");
+//        list.add(pm);
+//
+//        pm.setmName("batatas");
+//        pm.setPrice(4.25);
+//        pm.setmBrand("Matutano");
+//        list.add(pm);
+//
+//        pm.setmName("batatas");
+//        pm.setPrice(4.25);
+//        pm.setmBrand("Matutano");
+//        list.add(pm);
+//
+//        pm.setmName("batatas");
+//        pm.setPrice(4.25);
+//        pm.setmBrand("Matutano");
+//        list.add(pm);
+
+//        pm.setmName("batatas");
+//        pm.setPrice(4.25);
+//        pm.setmBrand("Matutano");
+//        list.add(pm);
+
+        ProdListAdapter adapter = new ProdListAdapter(this, ProdLists.getBestProdList());
+        ListView bestProd = (ListView) findViewById(R.id.best_product);
+        bestProd.setAdapter(adapter);
 
 
         //if the user is already logged in we will directly start the profile activity
@@ -62,15 +97,14 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         }
 
 
-//        ListView bestProd = (ListView) findViewById(R.id.best_product);
-//      //  ProdListAdapter prodAdapter = new ProdListAdapter(this, R.layout.product_line, ProdLists.getBestProdList());
-//
-//        if (!ProdLists.getBestProdList().isEmpty()) {
-//           bestProd.setAdapter(prodAdapter);
-//
-//        }
-    }
+//        ListView pList = (ListView) view.findViewById(R.id.product_List_view);
+//        ProdLists.setScanProdList(testList);
+//        ArrayList<ProductModel> list =  ProdLists.getBestProdList();
+//        ProdListAdapter adapter = new ProdListAdapter(getContext(), list);
+//        pList.setAdapter(adapter);
 
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -81,14 +115,6 @@ public class OptionsDrawer_Activity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -112,7 +138,7 @@ public class OptionsDrawer_Activity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_productDetails) {
-//call product fragment
+            //call product fragment
             // to call a fragment
             Product_Fragment product_fragment = new Product_Fragment();
             FragmentManager manager = getSupportFragmentManager();
@@ -123,6 +149,11 @@ public class OptionsDrawer_Activity extends AppCompatActivity
                             product_fragment,
                             product_fragment.getTag()
                     ).commit();
+
+
+            //   startActivity(new Intent(getApplicationContext(), Scan_Activity.class));
+
+
 
             // startActivity(new Intent(getApplicationContext(), Scan_Activity.class));
         } else if (id == R.id.nav_profile) {
@@ -145,7 +176,11 @@ public class OptionsDrawer_Activity extends AppCompatActivity
             s.logout();
             startActivity(new Intent(getApplicationContext(), Second_activity.class));
 
+        } else if (id == R.id.nav_exit) {
+            System.exit(0);
         }
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

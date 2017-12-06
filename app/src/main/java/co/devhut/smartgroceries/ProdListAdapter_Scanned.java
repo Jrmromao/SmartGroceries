@@ -1,7 +1,6 @@
 package co.devhut.smartgroceries;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -10,24 +9,28 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by jrmromao on 25/11/2017.
- * this adapter is the adapter used to
- * present the list with the best products - the
- * first list being loaded
+ * this adapter class is the one used
+ * to present the units scanned
  */
 
-public class ProdListAdapter extends ArrayAdapter<ProductModel> {
+public class ProdListAdapter_Scanned extends ArrayAdapter<ProductModel> {
 
-    ProdListAdapter(@NonNull Context context, ArrayList<ProductModel> pList) {
+
+    ProdListAdapter_Scanned(@NonNull Context context, ArrayList<ProductModel> pList) {
         super(context, 0, pList);
     }
-    public ProdListAdapter(Context context, int resource, List<ProductModel> products) {
+
+    public ProdListAdapter_Scanned(Context context, int resource, List<ProductModel> products) {
         super(context, resource, products);
     }
+
 
     @SuppressLint("SetTextI18n")
     @NonNull
@@ -35,17 +38,20 @@ public class ProdListAdapter extends ArrayAdapter<ProductModel> {
         ProductModel pm = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.product_line, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.line_product_scanned, parent, false);
         }
 
-        TextView prodBrand = (TextView) convertView.findViewById(R.id.pl_brand_txt);
-        TextView prodName = (TextView) convertView.findViewById(R.id.pl_name_txt);
-        TextView prodPrice = (TextView) convertView.findViewById(R.id.pl_price_txt);
+        TextView prodBrand = (TextView) convertView.findViewById(R.id.lps_brand_txt);
+        TextView prodName = (TextView) convertView.findViewById(R.id.lps_name_txt);
+        TextView prodPrice = (TextView) convertView.findViewById(R.id.lps_price_txt);
+        TextView prodUnit = (TextView) convertView.findViewById(R.id.lps_prodUnit);
 
         assert pm != null;
         prodBrand.setText(pm.getmBrand());
         prodName.setText(pm.getmName());
         prodPrice.setText("" + pm.getmPrice());
+        prodUnit.setText("" + pm.getProdCount());
+
 
         return convertView;
 

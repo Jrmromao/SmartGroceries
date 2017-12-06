@@ -8,6 +8,7 @@ package co.devhut.smartgroceries;
 public class BarCode {
 
 
+    private static boolean flag;
     private static String barcodeNum;
 
     public BarCode() {
@@ -22,5 +23,13 @@ public class BarCode {
         return barcodeNum;
     }
 
+
+    public static boolean isFlag() {
+        return flag;
+    }
+
+    public static void setFlag(boolean flag) {
+        BarCode.flag = flag;
+    }
 
 }

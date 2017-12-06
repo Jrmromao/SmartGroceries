@@ -27,8 +27,8 @@ public class ProductModel {
 
     public ProductModel(int mUPC_num, String mBrand, String mName, String mDescription, String mExpiryDate, double mPrice) {
         this.mUPC_num = mUPC_num;
+        this.mBrand = mBrand;
         this.mName = mName;
-        this.mName = mBrand;
         this.mDescription = mDescription;
         this.mExpiryDate = mExpiryDate;
         this.mPrice = mPrice;
@@ -37,8 +37,8 @@ public class ProductModel {
 
     public ProductModel(int mUPC_num, String mBrand, String mName, String mDescription, String mExpiryDate, double mPrice, int prodCount) {
         this.mUPC_num = mUPC_num;
+        this.mBrand = mBrand;
         this.mName = mName;
-        this.mName = mBrand;
         this.mDescription = mDescription;
         this.mExpiryDate = mExpiryDate;
         this.mPrice = mPrice;

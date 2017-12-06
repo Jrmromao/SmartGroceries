@@ -1,32 +1,42 @@
 package co.devhut.smartgroceries;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jrmromao on 24/11/2017.
  * class to old he lists of products
  */
 
-public class ProdLists {
+class ProdLists {
 
-    private static ArrayList<ProductModel> bestProdList;
-    private static List<ProductModel> scanProdList;
+    private static ArrayList<ProductModel> bestProdList = new ArrayList<>();//new up the arrayList -  i was getting an error,
+    private static ArrayList<ProductModel> scanProdList = new ArrayList<>();// and ultimately the app was crashing, because i was not newing up the arrays
 
-
-    public static ArrayList<ProductModel> getBestProdList() {
+    static ArrayList<ProductModel> getBestProdList() {
         return bestProdList;
     }
 
-    public static void setBestProdList(ArrayList<ProductModel> bestProdList) {
-        ProdLists.bestProdList = bestProdList;
+    static void setBestProdList(ProductModel bestProd) {
+
+        if (ProdLists.bestProdList == null) {
+            ProdLists.bestProdList = new ArrayList<>();
+            ProdLists.bestProdList.add(bestProd);
+        } else {
+            ProdLists.bestProdList.add(bestProd);
+        }
     }
 
-    public static List<ProductModel> getScanProdList() {
+    static ArrayList<ProductModel> getScanProdList() {
         return scanProdList;
     }
 
-    public static void setScanProdList(List<ProductModel> scanProdList) {
-        ProdLists.scanProdList = scanProdList;
+    static void setScanProdList(ProductModel pm) {
+        if (ProdLists.scanProdList == null) {
+            ProdLists.scanProdList = new ArrayList<>();
+            ProdLists.scanProdList.add(pm);
+        } else {
+            ProdLists.scanProdList.add(pm);
+        }
+
     }
 }

@@ -20,7 +20,7 @@
     <!--activity_optionsdrawer_drawer.xtl-->
     <string name="scan_product">Scan Product</string>
     <string name="nav_signOut">Sign Out</string>
-
+    <string name="nav_exit">Exit</string>
 
     <!--content main2.xml-->
     <string name="scan_product_btn">Scan Product</string>
@@ -40,7 +40,6 @@
     <string name="reg_haveAcc_txt">Have an account?</string>
     <string name="reg_policy">By clicking on \"Create Account\" you agree to \nour Terms of Use and Privacy Policy</string>
 
-
     <!--profile fragment-->
     <string name="prof_pic">Profile photo </string>
     <string name="prof_firstName">First Name: </string>
@@ -52,12 +51,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
     <!--result fragment -->
     <string name="r_upcCode">UPC Code: </string>
 
-
     <!--listView product-->
     <string name="pl_image_desc">product logo</string>
+
+    <!--Advertise products-->
+    <string name="add_title">Hurry Up! Get these\n best deals while they last</string>
+
+    <!--line product scanned-->
+    <string name="lps_imgView">Image product scanned</string>
+    <string name="lps_prodUnits">Units</string>
 
 </resources>
