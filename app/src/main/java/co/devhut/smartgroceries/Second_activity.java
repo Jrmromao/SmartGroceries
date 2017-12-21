@@ -3,9 +3,12 @@ package co.devhut.smartgroceries;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -95,6 +98,13 @@ public class Second_activity extends AppCompatActivity {
 
         TextView txt_username = (TextView) findViewById(R.id.txt_username);
         TextView txt_password = (TextView) findViewById(R.id.txt_password);
+
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        Menu menu = navigationView.getMenu();
+
+        MenuItem menuItem = menu.findItem(R.layout.nav_header_options_drawer);
 
 
         //load.setVisibility(View.VISIBLE);

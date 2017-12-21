@@ -105,7 +105,36 @@ public class ProductModel {
         this.mPrice = mPrice;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductModel)) return false;
 
+        ProductModel that = (ProductModel) o;
+
+        if (getmUPC_num() != that.getmUPC_num()) return false;
+//        if (Double.compare(that.getmPrice(), getmPrice()) != 0) return false;
+//        if (getProdCount() != that.getProdCount()) return false;
+//        if (!getmBrand().equals(that.getmBrand())) return false;
+//        if (!getmName().equals(that.getmName())) return false;
+//        if (!getmDescription().equals(that.getmDescription())) return false;
+        return getmExpiryDate().equals(that.getmExpiryDate());
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getmUPC_num();
+        result = 31 * result + getmBrand().hashCode();
+        result = 31 * result + getmName().hashCode();
+        result = 31 * result + getmDescription().hashCode();
+        result = 31 * result + getmExpiryDate().hashCode();
+        temp = Double.doubleToLongBits(getmPrice());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + getProdCount();
+        return result;
+    }
 }
 
 

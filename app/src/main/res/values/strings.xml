@@ -62,6 +62,12 @@
 
     <!--line product scanned-->
     <string name="lps_imgView">Image product scanned</string>
-    <string name="lps_prodUnits">Units</string>
+    <string name="lps_prodUnits">Units</string>#
+
+
+    <!--product details fragment-->
+    <string name="pd_img_descrip">Product Image.</string>
+    <string name="pd_expire_Date">Expire Date: </string>
+
 
 </resources>

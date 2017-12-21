@@ -103,11 +103,24 @@ public class Product_Fragment extends Fragment {
                 pmlist = ProdLists.getScanProdList().get(position);
                 ProdBundle.setProdDetails(pmlist);
 
+
+                Bundle proBundle = new Bundle();
+
+
+                proBundle.putInt("prodIndex", position);
+
                 Fragment fragment = new ProductDetail_Fragment();
+
+                fragment.setArguments(proBundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_profile, fragment, fragment.getTag()).commit();
 
+
+                Bundle myBundle = new Bundle();
+
+
+                Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -117,7 +130,9 @@ public class Product_Fragment extends Fragment {
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), Scan_Activity.class));
+                //startActivity(new Intent(getActivity(), Scan_Activity.class));
+                loadProdList();
+
             }
         });
 
@@ -137,4 +152,87 @@ public class Product_Fragment extends Fragment {
         pList.setAdapter(adapter);
 
     }
+
+
+    public void loadProdList() {
+
+        final int count = 1;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_BEST_PRODUCT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject obj = new JSONObject(response); //converting response to json object
+
+                            //if no error in response
+                            if (!obj.getBoolean("error")) {
+
+                                JSONObject prodJson = obj.getJSONObject("product");
+
+                                ProductModel bp = new ProductModel();
+
+                                bp.setmUPC_num(prodJson.getInt("upc_num"));
+                                bp.setmBrand(prodJson.getString("name"));
+                                bp.setmDescription(prodJson.getString("description"));
+                                bp.setmExpiryDate(prodJson.getString("expiry_date"));
+                                bp.setPrice(prodJson.getDouble("price"));
+                                bp.setProdCount(count);
+
+
+                                if (!ProdLists.getScanProdList().contains(bp) || ProdLists.getScanProdList().isEmpty())
+                                    ProdLists.setScanProdList(bp);
+                                else {
+
+                                    bp.setmUPC_num(prodJson.getInt("upc_num"));
+                                    bp.setmBrand(prodJson.getString("name"));
+                                    bp.setmDescription(prodJson.getString("description"));
+                                    bp.setmExpiryDate(prodJson.getString("expiry_date"));
+                                    bp.setPrice(prodJson.getDouble("price"));
+
+                                    ProductModel pm2 = ProdLists.getScanProdList().get(ProdLists.getScanProdList().indexOf(bp));
+
+
+                                    bp.setProdCount(pm2.getProdCount() + 1);
+
+
+                                    ProdLists.getScanProdList().set(ProdLists.getScanProdList().indexOf(bp), bp);
+
+
+                                    Toast.makeText(getActivity(), "count  " + bp.getProdCount(), Toast.LENGTH_SHORT).show();
+
+                                }
+
+
+//                                     ProductModel bp = new ProductModel(prodJson.getInt("upc_num"),
+//                                            prodJson.getString("name"),
+//                                            prodJson.getString("brand"),
+//                                            prodJson.getString("description"),
+//                                            prodJson.getString("expiry_date"),
+//                                            prodJson.getDouble("price"),
+//                                                                        count);
+
+
+                            }
+                        } catch (JSONException e) {
+                            Log.e("SmartGroceries", "doInBackground catch: " + e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("SmartGroceries", "onErrorResponse ERROR:" + error.toString());
+                    }
+                }) {
+
+
+        };
+
+        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
+
+
+    }
+
+
 }
