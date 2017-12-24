@@ -14,13 +14,7 @@ public class ProductModel {
     private String mDescription;
     private String mExpiryDate;
     private double mPrice;
-    private int prodCount;
-
-
-
-
-
-
+    private int prodUnits;
 
     public ProductModel() {
     }
@@ -34,23 +28,22 @@ public class ProductModel {
         this.mPrice = mPrice;
     }
 
-
-    public ProductModel(int mUPC_num, String mBrand, String mName, String mDescription, String mExpiryDate, double mPrice, int prodCount) {
+    public ProductModel(int mUPC_num, String mBrand, String mName, String mDescription, String mExpiryDate, double mPrice, int prodUnits) {
         this.mUPC_num = mUPC_num;
         this.mBrand = mBrand;
         this.mName = mName;
         this.mDescription = mDescription;
         this.mExpiryDate = mExpiryDate;
         this.mPrice = mPrice;
-        this.prodCount = prodCount;
+        this.prodUnits = prodUnits;
     }
 
-    public int getProdCount() {
-        return prodCount;
+    public int getProdUnits() {
+        return prodUnits;
     }
 
-    public void setProdCount(int prodCount) {
-        this.prodCount = prodCount;
+    public void setProdUnits(int prodUnits) {
+        this.prodUnits = prodUnits;
     }
 
     public String getmBrand() {
@@ -132,7 +125,7 @@ public class ProductModel {
         result = 31 * result + getmExpiryDate().hashCode();
         temp = Double.doubleToLongBits(getmPrice());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + getProdCount();
+        result = 31 * result + getProdUnits();
         return result;
     }
 }

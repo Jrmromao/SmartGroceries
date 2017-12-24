@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class ProdListAdapter_Scanned extends ArrayAdapter<ProductModel> {
         prodBrand.setText(pm.getmBrand());
         prodName.setText(pm.getmName());
         prodPrice.setText("" + pm.getmPrice());
-        prodUnit.setText("" + pm.getProdCount());
+        prodUnit.setText("" + pm.getProdUnits());
 
 
         return convertView;

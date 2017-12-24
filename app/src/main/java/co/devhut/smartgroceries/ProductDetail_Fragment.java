@@ -1,17 +1,18 @@
 package co.devhut.smartgroceries;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 public class ProductDetail_Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -23,6 +24,10 @@ public class ProductDetail_Fragment extends Fragment {
     public TextView prodExpireDateTxt = null;
     public TextView prodDesripTxt = null;
     public ProductModel pm = null;
+    public ImageView back_btn = null;
+
+    public TextView unitsTxt = null;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -53,7 +58,6 @@ public class ProductDetail_Fragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-
         pm = null;
     }
 
@@ -72,30 +76,36 @@ public class ProductDetail_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
 
-
         Bundle proBuncle = new Bundle();
-
         int index = proBuncle.getInt("prodIndex");
-
-
-        pm = new ProductModel();
-
 
         pm = ProdLists.getScanProdList().get(index);
         prodNameTxt = (TextView) view.findViewById(R.id.pd_prodNameTxt);
         prodBrandTxt = (TextView) view.findViewById(R.id.pd_proBrandTxt);
         prodDesripTxt = (TextView) view.findViewById(R.id.pd_prodDescrip);
         prodExpireDateTxt = (TextView) view.findViewById(R.id.pd_ExpireDateTxt);
+        unitsTxt = (TextView) view.findViewById(R.id.pd_unitsTxt);
 
-
+        // set the data to its correspondent textField
         prodNameTxt.setText(ProdBundle.getProdDetails().getmName());
-        prodBrandTxt.setText(ProdBundle.getProdDetails().getmName());
+        prodBrandTxt.setText(ProdBundle.getProdDetails().getmBrand());
         prodExpireDateTxt.setText(ProdBundle.getProdDetails().getmExpiryDate());
-
-
+        unitsTxt.setText(String.valueOf(ProdBundle.getProdDetails().getProdUnits()));
         prodDesripTxt.setText(ProdBundle.getProdDetails().getmDescription());
+        back_btn = (ImageView) view.findViewById(R.id.backBtn);
 
-
+        // go back method
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new Product_Fragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_profile, fragment, fragment.getTag()).commit();
+                //getActivity().finish();
+            }
+        });
 
         return view;
     }
@@ -118,12 +128,10 @@ public class ProductDetail_Fragment extends Fragment {
 //                    + " must implement OnFragmentInteractionListener");
 //        }
 //    }
-
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-
     }
 
     public interface OnFragmentInteractionListener {

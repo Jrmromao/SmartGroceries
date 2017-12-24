@@ -100,11 +100,6 @@ public class Second_activity extends AppCompatActivity {
         TextView txt_password = (TextView) findViewById(R.id.txt_password);
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        Menu menu = navigationView.getMenu();
-
-        MenuItem menuItem = menu.findItem(R.layout.nav_header_options_drawer);
 
 
         //load.setVisibility(View.VISIBLE);

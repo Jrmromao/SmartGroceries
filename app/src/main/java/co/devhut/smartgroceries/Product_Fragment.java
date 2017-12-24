@@ -1,8 +1,6 @@
 package co.devhut.smartgroceries;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,14 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,13 +23,6 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import static co.devhut.smartgroceries.ProdLists.getScanProdList;
-import static co.devhut.smartgroceries.ProdLists.setScanProdList;
-
 
 public class Product_Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -41,12 +30,17 @@ public class Product_Fragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public ListView pList;
+    public TextView totalTextView;
     public ProdListAdapter_Scanned adapter = null;
     // san product button
     private Button scanBtn;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private double totalPrice;
+    private double totalProdPrice;
+
 
 
     public Product_Fragment() {
@@ -72,14 +66,14 @@ public class Product_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-
-
         }
+
+
+
     }
 
     @Override
@@ -88,37 +82,24 @@ public class Product_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_, container, false);
         scanBtn = (Button) view.findViewById(R.id.FP_scanBtn);
         pList = (ListView) view.findViewById(R.id.product_List_view);
-
-
-        //Toast.makeText(getActivity(), " onCreateView Scan Prod list Size:
-        // "+ProdLists.getScanProdList().size(), Toast.LENGTH_SHORT).show();
-
+        totalTextView = (TextView) view.findViewById(R.id.total_txt);
 
         pList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressLint("ResourceType")
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ProductModel pmlist = new ProductModel();
-                pmlist = ProdLists.getScanProdList().get(position);
+                ProductModel pmlist = ProdLists.getScanProdList().get(position);
                 ProdBundle.setProdDetails(pmlist);
-
-
                 Bundle proBundle = new Bundle();
-
-
                 proBundle.putInt("prodIndex", position);
 
                 Fragment fragment = new ProductDetail_Fragment();
-
                 fragment.setArguments(proBundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_profile, fragment, fragment.getTag()).commit();
-
-
                 Bundle myBundle = new Bundle();
-
 
                 Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();
 
@@ -128,14 +109,18 @@ public class Product_Fragment extends Fragment {
 
 
         scanBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(getActivity(), Scan_Activity.class));
                 loadProdList();
-
             }
         });
 
+        for (ProductModel p : ProdLists.getScanProdList())
+            totalPrice = p.getmPrice() * p.getProdUnits();
+
+        totalTextView.setText("€" + String.format(String.valueOf(totalPrice), 0.00));
 
         return view;
     }
@@ -150,13 +135,11 @@ public class Product_Fragment extends Fragment {
 
         adapter.notifyDataSetInvalidated();
         pList.setAdapter(adapter);
-
+        totalTextView.setText("€" + String.format(String.valueOf(totalPrice), 0.00));
     }
 
 
     public void loadProdList() {
-
-        final int count = 1;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_BEST_PRODUCT,
                 new Response.Listener<String>() {
@@ -167,51 +150,36 @@ public class Product_Fragment extends Fragment {
 
                             //if no error in response
                             if (!obj.getBoolean("error")) {
-
                                 JSONObject prodJson = obj.getJSONObject("product");
 
-                                ProductModel bp = new ProductModel();
-
+                                ProductModel bp = new ProductModel(); //create a new instance of the project model class
                                 bp.setmUPC_num(prodJson.getInt("upc_num"));
-                                bp.setmBrand(prodJson.getString("name"));
+                                bp.setmBrand(prodJson.getString("brand"));
+                                bp.setmName(prodJson.getString("name"));
                                 bp.setmDescription(prodJson.getString("description"));
                                 bp.setmExpiryDate(prodJson.getString("expiry_date"));
                                 bp.setPrice(prodJson.getDouble("price"));
-                                bp.setProdCount(count);
+                                bp.setProdUnits(1);
 
-
-                                if (!ProdLists.getScanProdList().contains(bp) || ProdLists.getScanProdList().isEmpty())
+                                if (!ProdLists.getScanProdList().contains(bp) || ProdLists.getScanProdList().isEmpty()) {
                                     ProdLists.setScanProdList(bp);
+                                    totalPrice = bp.getmPrice();
+                                }
+
                                 else {
 
                                     bp.setmUPC_num(prodJson.getInt("upc_num"));
-                                    bp.setmBrand(prodJson.getString("name"));
+                                    bp.setmBrand(prodJson.getString("brand"));
+                                    bp.setmName(prodJson.getString("name"));
                                     bp.setmDescription(prodJson.getString("description"));
                                     bp.setmExpiryDate(prodJson.getString("expiry_date"));
                                     bp.setPrice(prodJson.getDouble("price"));
-
-                                    ProductModel pm2 = ProdLists.getScanProdList().get(ProdLists.getScanProdList().indexOf(bp));
-
-
-                                    bp.setProdCount(pm2.getProdCount() + 1);
-
-
-                                    ProdLists.getScanProdList().set(ProdLists.getScanProdList().indexOf(bp), bp);
-
-
-                                    Toast.makeText(getActivity(), "count  " + bp.getProdCount(), Toast.LENGTH_SHORT).show();
-
+                                    ProductModel pm2 = ProdLists.getScanProdList().get( //
+                                            ProdLists.getScanProdList().indexOf(bp));   //  handle the units being bought
+                                    bp.setProdUnits(pm2.getProdUnits() + 1);            //
+                                    ProdLists.getScanProdList().set(ProdLists.getScanProdList().indexOf(bp), bp); // update the array list with the number of units being bought
+//                                    Toast.makeText(getActivity(), "count  " + bp.getProdCount(), Toast.LENGTH_SHORT).show();
                                 }
-
-
-//                                     ProductModel bp = new ProductModel(prodJson.getInt("upc_num"),
-//                                            prodJson.getString("name"),
-//                                            prodJson.getString("brand"),
-//                                            prodJson.getString("description"),
-//                                            prodJson.getString("expiry_date"),
-//                                            prodJson.getDouble("price"),
-//                                                                        count);
-
 
                             }
                         } catch (JSONException e) {
