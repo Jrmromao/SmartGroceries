@@ -74,8 +74,9 @@
     <string name="placeHolder">pace holder </string>
     <string name="pd_back">Back </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- for the checkout fragment -->
+    <string name="QR_bill">QR Bill</string>
+    <string name="complete">Done</string>
 
 
 </resources>

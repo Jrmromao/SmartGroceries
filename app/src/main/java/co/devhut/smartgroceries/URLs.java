@@ -9,12 +9,12 @@ package co.devhut.smartgroceries;
 class URLs {
 
     //home
-    //private static final String ROOT_URL = "http://192.168.56.1:8081/SmartGrocery/PHP/Api.php?apicall=";
-    //private static final String ROOT_URL = "http://192.168.0.3:8082/WebService/webresources/api/";
+    // private static final String ROOT_URL = "http://192.168.56.1:8081/SmartGrocery/PHP/Api.php?apicall=";
+    private static final String ROOT_URL = "http://192.168.0.3:8082/WebService/webresources/api/";
 
     //home portugal
     //private static final String ROOT_URL = "http://192.168.56.1:8081/WebService/webresources/api/";
-    private static final String ROOT_URL = "http://192.168.56.1:8082/WebService/webresources/api/";
+    // private static final String ROOT_URL = "http://192.168.56.1:8082/WebService/webresources/api/";
 
     //login
     //college

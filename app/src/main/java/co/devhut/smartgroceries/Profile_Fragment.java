@@ -1,8 +1,11 @@
 package co.devhut.smartgroceries;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,11 @@ import android.widget.TextView;
 //  fragment for the user profile
 public class Profile_Fragment extends Fragment {
 
+    private Button editDetailBtn;
+
     public Profile_Fragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,11 +39,25 @@ public class Profile_Fragment extends Fragment {
         name.setText(user.getUsername());
         surnameName.setText(user.getUsername());
         email.setText(user.getEmail());
-        dateJoined.setText(" to be update");
+        dateJoined.setText(user.getDateJoined());
 
 
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_profile, container, false);
+        // call the fragment to edit details
+        editDetailBtn = (Button) view.findViewById(R.id.editDetails_btn);
+
+        editDetailBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+
+                Fragment f = new EditDetails_Fragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.content_profile, f, f.getTag()).commit();
+
+            }
+        });
+
         return view;
 
 

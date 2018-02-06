@@ -20,7 +20,7 @@ public class BarCode {
     }
 
     static String getBarcode() {
-        return "20202392";//barcodeNum;
+        return barcodeNum;
     }
 
 

@@ -39,7 +39,7 @@
             android:text="@string/pf_total"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/FP_checkoutBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -58,7 +58,7 @@
             android:textAllCaps="false"
             android:textColor="@color/viewfinder_laser"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/FP_checkoutBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -92,7 +92,7 @@
             tools:ignore="UnusedAttribute" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/FP_checkoutBtn"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginBottom="8dp"

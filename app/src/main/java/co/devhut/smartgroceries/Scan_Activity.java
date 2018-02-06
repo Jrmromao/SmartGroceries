@@ -265,53 +265,43 @@ public class Scan_Activity extends AppCompatActivity implements ZXingScannerView
 
                 @Override
                 public void onResponse(String response) {
+
                     try {
                         JSONObject obj = new JSONObject(response); //converting response to json object
+
                         //if no error in response
                         if (!obj.getBoolean("error")) {
                             JSONObject prodJson = obj.getJSONObject("product");
 
-                            if (ProdLists.getScanProdList().isEmpty()) {
+                            ProductModel bp = new ProductModel(); //create a new instance of the project model class
+                            bp.setmUPC_num(prodJson.getInt("upc_num"));
+                            bp.setmBrand(prodJson.getString("brand"));
+                            bp.setmName(prodJson.getString("name"));
+                            bp.setmDescription(prodJson.getString("description"));
+                            bp.setmExpiryDate(prodJson.getString("expiry_date"));
+                            bp.setPrice(prodJson.getDouble("price"));
+                            bp.setProdUnits(1);
 
-                                ProductModel pm = new ProductModel(prodJson.getInt("upc_num"),
-                                        prodJson.getString("name"),
-                                        prodJson.getString("brand"),
-                                        prodJson.getString("description"),
-                                        prodJson.getString("expiry_date"),
-                                        prodJson.getDouble("price"), count);
-                                ProdLists.setScanProdList(pm);
+                            if (!ProdLists.getScanProdList().contains(bp) || ProdLists.getScanProdList().isEmpty()) {
+                                ProdLists.setScanProdList(bp);
                             } else {
-                                for (ProductModel pm : ProdLists.getScanProdList()) {
-                                    if (pm.getmUPC_num() == prodJson.getInt("upc_num")) {
-                                        indexOf = ProdLists.getScanProdList().indexOf(pm);
 
-                                        ProductModel updatePM = new ProductModel(prodJson.getInt("upc_num"),
-                                                prodJson.getString("name"),
-                                                prodJson.getString("brand"),
-                                                prodJson.getString("description"),
-                                                prodJson.getString("expiry_date"),
-                                                prodJson.getDouble("price"), count++);
-                                        ProdLists.getScanProdList().set(indexOf, updatePM);
+                                bp.setmUPC_num(prodJson.getInt("upc_num"));
+                                bp.setmBrand(prodJson.getString("brand"));
+                                bp.setmName(prodJson.getString("name"));
+                                bp.setmDescription(prodJson.getString("description"));
+                                bp.setmExpiryDate(prodJson.getString("expiry_date"));
+                                bp.setPrice(prodJson.getDouble("price"));
 
-                                        Log.e("Loop", "Count " + pm.getProdUnits());
-                                    } else {
-                                        flag = true;
-                                        Log.e("Loop", "flag is equal to: " + flag);
-                                    }
-                                }
-                                if (flag) {
-                                    ProductModel pm = new ProductModel(prodJson.getInt("upc_num"),
-                                            prodJson.getString("name"),
-                                            prodJson.getString("brand"),
-                                            prodJson.getString("description"),
-                                            prodJson.getString("expiry_date"),
-                                            prodJson.getDouble("price"), count);
-                                    ProdLists.setScanProdList(pm);
-                                    flag = false;
-                                }
+                                ProductModel pm2 = ProdLists.getScanProdList().get( //
+                                        ProdLists.getScanProdList().indexOf(bp));   //  handle the units being bought
+
+                                bp.setProdUnits(pm2.getProdUnits() + 1);            //
+                                ProdLists.getScanProdList().set(ProdLists.getScanProdList().indexOf(bp), bp); // update the array list with the number of units being bought
+//                                    Toast.makeText(getActivity(), "count  " + bp.getProdCount(), Toast.LENGTH_SHORT).show();
                             }
+
                         }
-                        Log.d("Result", "Success JSON Resold:" + response);
                     } catch (JSONException e) {
                         Log.e("SmartGroceries", "doInBackground catch: " + e.toString());
                     }

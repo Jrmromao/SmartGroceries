@@ -134,9 +134,11 @@ public class Second_activity extends AppCompatActivity {
                     if (!obj.getBoolean("error")) {
                         JSONObject userJson = obj.getJSONObject("user");
                         Toast.makeText(getApplicationContext(), userJson.toString(), Toast.LENGTH_SHORT).show();
+
                         UserModel user = new UserModel(userJson.getInt("id"),
                                 userJson.getString("name"),
-                                userJson.getString("email"));
+                                userJson.getString("email"),
+                                userJson.getString("dateJoined"));
 
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 

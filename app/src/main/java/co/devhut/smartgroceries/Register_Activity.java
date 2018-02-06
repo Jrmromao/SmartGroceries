@@ -116,6 +116,7 @@ public class Register_Activity extends AppCompatActivity {
                         UserModel user = new UserModel(userJson.getInt("id"),
                                 userJson.getString("name"),
                                 userJson.getString("email"));
+
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
                         finish();
@@ -143,7 +144,7 @@ public class Register_Activity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name);           //
                 params.put("password", password);       //  values to be sent on the post request
-                params.put("email", email);       //  values to be sent on the post request
+                params.put("email", email);       //  values to be sent on the post requestz
 
                 return params;
             }

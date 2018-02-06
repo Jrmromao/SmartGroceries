@@ -1,6 +1,7 @@
 package co.devhut.smartgroceries;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,6 +35,7 @@ public class Product_Fragment extends Fragment {
     public ProdListAdapter_Scanned adapter = null;
     // san product button
     private Button scanBtn;
+    private Button checkoutBtn;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -76,6 +78,7 @@ public class Product_Fragment extends Fragment {
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -83,6 +86,8 @@ public class Product_Fragment extends Fragment {
         scanBtn = (Button) view.findViewById(R.id.FP_scanBtn);
         pList = (ListView) view.findViewById(R.id.product_List_view);
         totalTextView = (TextView) view.findViewById(R.id.total_txt);
+        checkoutBtn = (Button) view.findViewById(R.id.FP_checkoutBtn);
+
 
         pList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @SuppressLint("ResourceType")
@@ -99,21 +104,38 @@ public class Product_Fragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.content_profile, fragment, fragment.getTag()).commit();
-                Bundle myBundle = new Bundle();
-
-                Toast.makeText(getContext(), "Position: " + position, Toast.LENGTH_SHORT).show();
-
             }
         });
 
+        checkoutBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+
+
+                if (totalPrice == 0.00) {
+                    Toast.makeText(getActivity(), "Basket Empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    Bundle totalBill = new Bundle();
+                    totalBill.putDouble("totalBill", totalPrice);
+                    Fragment f = new Checkout_Fragment();
+                    f.setArguments(totalBill);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.content_profile, f, f.getTag()).commit();
+
+
+                }
+            }
+        });
 
 
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(getActivity(), Scan_Activity.class));
-                loadProdList();
+                startActivity(new Intent(getActivity(), Scan_Activity.class));
+
             }
         });
 
@@ -125,7 +147,7 @@ public class Product_Fragment extends Fragment {
         return view;
     }
 
-    @SuppressLint("ResourceType")
+    @SuppressLint({"ResourceType", "SetTextI18n"})
     @Override
     public void onResume() {
         super.onResume();
@@ -135,72 +157,7 @@ public class Product_Fragment extends Fragment {
 
         adapter.notifyDataSetInvalidated();
         pList.setAdapter(adapter);
-        totalTextView.setText("€" + String.format(String.valueOf(totalPrice), 0.00));
+        // totalTextView.setText("€" + String.format(String.valueOf(totalPrice), 0.00));
     }
-
-
-    public void loadProdList() {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_BEST_PRODUCT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject obj = new JSONObject(response); //converting response to json object
-
-                            //if no error in response
-                            if (!obj.getBoolean("error")) {
-                                JSONObject prodJson = obj.getJSONObject("product");
-
-                                ProductModel bp = new ProductModel(); //create a new instance of the project model class
-                                bp.setmUPC_num(prodJson.getInt("upc_num"));
-                                bp.setmBrand(prodJson.getString("brand"));
-                                bp.setmName(prodJson.getString("name"));
-                                bp.setmDescription(prodJson.getString("description"));
-                                bp.setmExpiryDate(prodJson.getString("expiry_date"));
-                                bp.setPrice(prodJson.getDouble("price"));
-                                bp.setProdUnits(1);
-
-                                if (!ProdLists.getScanProdList().contains(bp) || ProdLists.getScanProdList().isEmpty()) {
-                                    ProdLists.setScanProdList(bp);
-                                    totalPrice = bp.getmPrice();
-                                }
-
-                                else {
-
-                                    bp.setmUPC_num(prodJson.getInt("upc_num"));
-                                    bp.setmBrand(prodJson.getString("brand"));
-                                    bp.setmName(prodJson.getString("name"));
-                                    bp.setmDescription(prodJson.getString("description"));
-                                    bp.setmExpiryDate(prodJson.getString("expiry_date"));
-                                    bp.setPrice(prodJson.getDouble("price"));
-                                    ProductModel pm2 = ProdLists.getScanProdList().get( //
-                                            ProdLists.getScanProdList().indexOf(bp));   //  handle the units being bought
-                                    bp.setProdUnits(pm2.getProdUnits() + 1);            //
-                                    ProdLists.getScanProdList().set(ProdLists.getScanProdList().indexOf(bp), bp); // update the array list with the number of units being bought
-//                                    Toast.makeText(getActivity(), "count  " + bp.getProdCount(), Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        } catch (JSONException e) {
-                            Log.e("SmartGroceries", "doInBackground catch: " + e.toString());
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("SmartGroceries", "onErrorResponse ERROR:" + error.toString());
-                    }
-                }) {
-
-
-        };
-
-        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
-
-
-    }
-
 
 }

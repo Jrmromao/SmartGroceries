@@ -20,7 +20,7 @@
         android:layout_height="84dp"
         android:contentDescription="@string/profile_photo"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/unnamed" />
+        app:srcCompat="@drawable/d" />
 
     <TextView
         android:id="@+id/nav_view_header"
